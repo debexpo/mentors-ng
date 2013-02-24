@@ -1,0 +1,7 @@
+This folder contains the variables.less file needed to rebuild the
+mentors.d.n Bootstrap theme from scratch.
+
+It is a drop-in replacement for the original Bootstrap file.
+
+Bootstrap can be recompiled using lessc and uglifyjs from the Debian
+repositories.
