@@ -1,0 +1,41 @@
+TODO List
+=========
+
+Debexpo shortcomings
+--------------------
+
+Try to support i18n from the start, and keep doing it.
+Let several people upload the same package without clobbering each other.
+Understand that there are several suites to which upload packages.
+Keep in mind whatever is on the debexpo bug tracker :
+https://alioth.debian.org/tracker/?atid=413115&group_id=100127&func=browse
+
+Core functionality
+------------------
+
+We need this to get feature-parity with what's currently working on mentors.d.n
+
+ - User profiles (extend the django user profile, or create a secondary one?)
+   → Registration
+   → GPG
+ - Package management
+   → Storage
+   → Upload processing
+   → QA checks (most likely done asynchronously using celery)
+   → Repository generation
+   → Post-real-upload cleanups (using UDD?)
+ - Comment management
+   → Per-package
+   → with some kind of karma system
+ - Subscriptions/Sponsorship queues
+
+Supplementary functionality
+---------------------------
+
+ - News module for the frontpage
+ - A way to manage the "content" pages without editing templates?
+ - Inline review
+   → Think about this when working on the package storage
+ - Per-team review queues
+ - "Social" authentication (OpenID, Debian SSO, ...)
+
