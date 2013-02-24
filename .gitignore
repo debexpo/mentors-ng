@@ -1,0 +1,8 @@
+*.pyc
+*~
+#*#
+mentors/settings/prod.py
+media/*
+!media/.keep
+static/*
+!static/.keep
