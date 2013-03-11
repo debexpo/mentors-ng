@@ -1,8 +1,21 @@
-*.pyc
+# Python bytecode:
+*.py[co]
+
+# Packaging files:
+*.egg*
+
+# Editor temp files:
+*.swp
 *~
-#*#
-mentors/settings/prod.py
-media/*
-!media/.keep
-static/*
-!static/.keep
+
+# Sphinx docs:
+build
+
+# SQLite3 database files:
+*.db
+
+# Logs:
+*.log
+
+# Docs build directory:
+/docs/_build

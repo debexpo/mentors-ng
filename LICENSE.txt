@@ -1,0 +1,56 @@
+The mentors codebase is
+
+Copyright © 2013 Nicolas Dandrimont <nicolas.dandrimont@crans.org>
+
+and is distributed under the MIT license as follows:
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+This django project is based on the "two scoops of Django"
+startproject template, available on GitHub[1] under the
+MIT license, with the following copyright.
+
+Copyright (c) 2013 Audrey Roy, Daniel Greenfeld, and contributors.
+
+[1] https://github.com/twoscoops/django-twoscoops-project
+
+
+
+Finally, we build upon the code and ideas of Debexpo[2], the
+previous iteration of the mentors.debian.net codebase. That
+code is distributed under the MIT license, with the following
+copyright notices:
+
+Copyright © 2008-2009 Jonny Lamb <jonny@debian.org>
+Copyright © 2008-2009 Serafeim Zanikolas <serzan@hellug.gr>
+Copyright © 2008-2009 Ondrej Certik <ondrej@certik.cz>
+Copyright © 2009 David Paleino <d.paleino@gmail.com>
+Copyright © 2009 Paul Wise <pabs@debian.org>
+Copyright © 2010 Jan Dittberner <jandd@debian.org>
+Copyright © 2008-2010 Christoph Haas <haas@debian.org>
+Copyright © 2011 Asheesh Laroia <paulproteus@debian.org>
+Copyright © 2011 Arno Töll <debian@toell.net>
+Copyright © 2012 Nicolas Dandrimont <nicolas.dandrimont@crans.org>
+
+[2] http://anonscm.debian.org/gitweb/?p=debexpo/debexpo.git
