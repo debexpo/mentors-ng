@@ -206,11 +206,17 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'profiles',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 ########## END APP CONFIGURATION
+
+
+########## USER MODEL CONFIGURATION
+AUTH_USER_MODEL = 'profiles.MentorsUser'
+########## END USER MODEL CONFIGURATION
 
 
 ########## LOGGING CONFIGURATION
