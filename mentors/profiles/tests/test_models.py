@@ -36,6 +36,7 @@ from profiles.models import MentorsUser
 
 
 class MentorsUserTests(TestCase):
+    # flake8: noqa
     def setUp(self):
         user = MentorsUser.objects.create_user('user@example.com')
         super_user = MentorsUser.objects.create_superuser('superuser@example.com')
