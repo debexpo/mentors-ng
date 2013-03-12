@@ -106,6 +106,10 @@ use by django::
 To avoid typing `--settings=mentors.settings.local` all the time, you
 can export the `DJANGO_SETTINGS_MODULE` environment variable.
 
+You can now create a new superuser::
+
+    $ django-admin.py createsuperuser --settings=mentors.settings.local
+
 Once you're done, you should be able to run the django development
 server::
     
