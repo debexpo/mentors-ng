@@ -35,6 +35,7 @@ from django.utils.translation import ugettext as _
 
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
+
 class MentorsUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """Create and saves a User with the given email and password."""
@@ -79,4 +80,3 @@ class MentorsUser(AbstractBaseUser, PermissionsMixin):
 
     def __unicode__(self):
         return self.email
-

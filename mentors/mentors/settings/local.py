@@ -1,8 +1,6 @@
 """Development settings and globals."""
 
-
-from os.path import join, normpath
-
+# flake8: noqa
 from base import *
 
 

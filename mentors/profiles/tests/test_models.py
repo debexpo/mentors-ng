@@ -34,6 +34,7 @@ from django.test import TestCase
 
 from profiles.models import MentorsUser
 
+
 class MentorsUserTests(TestCase):
     def setUp(self):
         user = MentorsUser.objects.create_user('user@example.com')

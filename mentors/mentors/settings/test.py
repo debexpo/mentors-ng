@@ -1,3 +1,6 @@
+"Test settings"
+
+# flake8: noqa
 from base import *
 
 ########## TEST SETTINGS
