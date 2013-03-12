@@ -1,0 +1,11 @@
+Hi{% if user.full_name %} {{ user.full_name }}{% endif %}, and thank you for registering to {{ site.domain }}!
+
+We would like you to confirm your account by following this link:
+
+http://{{ site.domain }}{% url "registration_activate" activation_key %}
+
+If you didn't register for {{ site.domain }}, you can just ignore this email. You will not recieve any further notification from us.
+
+Have a nice day,
+-- 
+The {{ site.domain }} admins
