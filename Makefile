@@ -30,7 +30,7 @@
 
 .PHONY: test
 test:
-	cd mentors; coverage run manage.py test --settings=mentors.settings.test; coverage html --include="$(CURDIR)/mentors/*" --omit=manage.py
+	cd mentors; coverage run --source=. manage.py test --settings=mentors.settings.test; coverage html --omit=*/migrations/*
 
 .PHONY: flake8
 flake8:
