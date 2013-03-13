@@ -34,6 +34,8 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
+from profiles.models import MentorsUser
+
 
 class RegistrationProcessTests(TestCase):
     def test_registration_process(self):
@@ -55,6 +57,9 @@ class RegistrationProcessTests(TestCase):
         response = self.client.post(reverse("registration_register"), data=user_data)
         self.assertRedirects(response, reverse("registration_complete"))
 
+        # Check that the user was created and is inactive
+        self.assertFalse(MentorsUser.objects.get(email=user_data["email"]).is_active)
+
         # Check that we sent the activation mail to the right person
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("activate", mail.outbox[0].subject)
@@ -72,3 +77,4 @@ class RegistrationProcessTests(TestCase):
         # And test it
         response = self.client.get(url)
         self.assertRedirects(response, reverse("registration_activation_complete"))
+        self.assertTrue(MentorsUser.objects.get(email=user_data["email"]).is_active)

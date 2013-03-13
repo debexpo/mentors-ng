@@ -42,6 +42,12 @@ class Register(views.Register):
     notification_subject_template_name = "profiles/registration/activation_email_subject.txt"
     notification_template_name = "profiles/registration/activation_email.txt"
 
+    def form_valid(self, form):
+        ret = super(Register, self).form_valid(form)
+        self.user.is_active = False
+        self.user.save()
+        return ret
+
 
 class RegistrationComplete(views.RegistrationComplete):
     template_name = "profiles/registration/registration_complete.html"
