@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="span3">
+        <ul class="nav nav-list">
+            <li><a href="#personalinfo">{% trans "Personal information" %}</a></li>
+        </ul>
+    </div>
+    <div class="span9">
+        <section id="personalinfo">
+        <div class="page-header">
+            <h1>{% trans "Personal information" %}</h1>
+        </div>
+        <h3>{% trans "Identity" %}</h3>
+        <dl>
+            {% if user.full_name %}
+            <dt>{% trans "Full name" %}</dt>
+            <dd>{{ user.full_name }}</dd>
+            {% endif %}
+            <dt>{% trans "Email address" %}</dt>
+            <dd><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
+        </dl>
+        {% if user.gpg_keys.all %}
+        <h3>{% trans "PGP Keys" %}</h3>
+        <dl>
+            {% for key in user.gpg_keys.all %}
+            <dt>{{ key.algorithm }}/{{ key.as_key_block.key.id }}</dt>
+            <dd>
+                <dl>
+                    <dt>{% trans "Fingerprint" %}</dt>
+                    <dd>{{ key.fingerprint }}</dd>
+                    <dt>{% trans "User IDs" %}</dt>
+                    <dd>
+                        <ul>
+                            {% for userid, mail in key.as_key_block.user_ids %}
+                            <li>{{ userid }} &lt;<a href="mailto:{{ mail }}">{{ mail }}</a>&gt;</li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                </dl>
+            </dd>
+            {% endfor %}
+        </dl>
+        {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock content %}

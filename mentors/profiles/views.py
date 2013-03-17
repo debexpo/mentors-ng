@@ -29,6 +29,7 @@
 #
 
 from django.contrib.auth import login
+from django.views.generic import DetailView
 
 from le_social.registration import views
 
@@ -72,9 +73,19 @@ class ActivationComplete(views.ActivationComplete):
     template_name = "profiles/registration/activation_complete.html"
 
 
+class ProfileView(DetailView):
+    template_name = "profiles/view.html"
+    slug_field = "email"
+    slug_url_kwarg = "email"
+    model = MentorsUser
+    queryset = MentorsUser.objects.filter(is_active=True)
+
+
 register = Register.as_view()
 registration_complete = RegistrationComplete.as_view()
 registration_closed = RegistrationClosed.as_view()
 
 activate = Activate.as_view()
 activation_complete = ActivationComplete.as_view()
+
+profile_view = ProfileView.as_view()
