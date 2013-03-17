@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="span12">
+        {% block full_form %}
+        <form class="form form-horizontal" method="POST" enctype="multipart/form-data">
+            {% block main_form %}
+            {% crispy form %}
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">{% trans "Submit" %}</button>
+                </div>
+            </div>
+            {% endblock main_form %}
+
+            {% block attached_files %}
+            {% if inlines %}
+            {% for formset in inlines %}
+                {{ formset.management_form }}
+                <fieldset>
+                    <legend>{% trans "PGP Keys" %}</legend>
+                    {% for form in formset %}
+                        {% crispy form %}
+                    {% endfor %}
+                </fieldset>
+            {% endfor %}
+
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">{% trans "Submit" %}</button>
+                </div>
+            </div>
+            {% endif %}
+            {% endblock %}
+        </form>
+        {% endblock full_form %}
+    </div>
+</div>
+{% endblock content %}

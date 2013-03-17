@@ -31,9 +31,11 @@
 from django.contrib.auth import login
 from django.views.generic import DetailView
 
+from braces.views import LoginRequiredMixin
+from extra_views import UpdateWithInlinesView
 from le_social.registration import views
 
-from .forms import UserCreationForm
+from .forms import UserCreationForm, UserModificationForm, InlineGPGKeyFormSet
 from .models import MentorsUser
 
 
@@ -81,6 +83,19 @@ class ProfileView(DetailView):
     queryset = MentorsUser.objects.filter(is_active=True)
 
 
+class ProfileEdit(LoginRequiredMixin, UpdateWithInlinesView):
+    template_name = "profiles/edit.html"
+    model = MentorsUser
+    form_class = UserModificationForm
+    inlines = [InlineGPGKeyFormSet]
+
+    def get_object(self):
+        return self.request.user
+
+    def get_form(self, form_class):
+        return form_class(self.get_object(), **self.get_form_kwargs())
+
+
 register = Register.as_view()
 registration_complete = RegistrationComplete.as_view()
 registration_closed = RegistrationClosed.as_view()
@@ -89,3 +104,4 @@ activate = Activate.as_view()
 activation_complete = ActivationComplete.as_view()
 
 profile_view = ProfileView.as_view()
+profile_edit = ProfileEdit.as_view()

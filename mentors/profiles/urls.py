@@ -43,4 +43,5 @@ urlpatterns = patterns(
     url(r'^register/closed/$', views.registration_closed, name='registration_closed'),
 
     url(r'^view/(?P<email>[^/]+)/$', views.profile_view, name='profile_view'),
+    url(r'^edit/$', views.profile_edit, name='profile_edit'),
 )

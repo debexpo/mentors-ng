@@ -7,3 +7,4 @@ South==0.7.6
 psycopg2==2.4.6
 django-crispy-forms==1.2.3
 django-le-social==0.7
+django-extra-views==0.6.2
