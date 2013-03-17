@@ -301,3 +301,8 @@ DATABASES = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
+
+########## MENTORS-SPECIFIC CONFIGURATION
+# See: docs/installing.rst
+MENTORS_ROOT = environ.get('MENTORS_ROOT', normpath(join(SITE_ROOT, 'var')))
+########## END MENTORS-SPECIFIC CONFIGURATION
