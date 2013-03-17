@@ -16,6 +16,11 @@ To install the system dependencies, as root, use::
 
     $ apt-get install virtualenvwrapper libpq-dev python-dev
 
+Setting up a database
+---------------------
+
+See :doc:`the dedicated page <install_postgres>`
+
 Virtualenv with virtualenvwrapper
 ---------------------------------
 
