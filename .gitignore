@@ -19,3 +19,10 @@ build
 
 # Docs build directory:
 /docs/_build
+
+# Local data
+/mentors/var
+
+# Test results
+/mentors/.coverage
+/mentors/htmlcov
