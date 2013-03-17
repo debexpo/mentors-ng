@@ -16,7 +16,6 @@ Core functionality
 We need this to get feature-parity with what's currently working on mentors.d.n
 
  - User profiles (extend the django user profile, or create a secondary one?)
-   → Registration
    → GPG
  - Package management
    → Storage
