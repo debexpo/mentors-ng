@@ -45,15 +45,15 @@ class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
+    class Meta:
+        model = MentorsUser
+        fields = ('email', 'full_name')
+
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Submit'))
 
         super(UserCreationForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = MentorsUser
-        fields = ('email', 'full_name')
 
     def clean_password2(self):
         # Check that the two password entries match
