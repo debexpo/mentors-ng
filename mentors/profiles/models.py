@@ -30,10 +30,13 @@
 
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
 
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+
+from lib.utils import gpg
 
 
 class MentorsUserManager(BaseUserManager):
@@ -80,3 +83,42 @@ class MentorsUser(AbstractBaseUser, PermissionsMixin):
 
     def __unicode__(self):
         return self.email
+
+
+class GPGKey(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="gpg_keys")
+    key = models.TextField(verbose_name=_('key contents'), blank=False)
+    algorithm = models.CharField(max_length=10)
+    fingerprint = models.CharField(max_length=128, unique=True)
+
+    def as_key_block(self):
+        if not hasattr(self, '__key_block'):
+            self.__key_block = gpg.parse_key_block(data=self.key)
+        return self.__key_block
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+
+        if self.as_key_block().key is None:
+            raise ValidationError(_('The given key data is invalid'))
+
+        for name, email in self.as_key_block().user_ids:
+            if email == self.owner.email:
+                break
+        else:
+            raise ValidationError(_('The given key does not belong to the user'))
+
+        self.fingerprint = self.as_key_block().key.fingerprint
+        self.algorithm = "%(strength)s%(type)s" % self.as_key_block().key.__dict__
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        gpg.add_key(data=self.key)
+        return super(GPGKey, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        gpg.remove_key(self.fingerprint)
+        return super(GPGKey, self).delete(*args, **kwargs)
+
+    def __unicode__(self):
+        return "%(algorithm)s/%(fingerprint)s" % self.__dict__

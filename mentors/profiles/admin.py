@@ -34,7 +34,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import MentorsUser
+from .models import MentorsUser, GPGKey
 from .forms import UserCreationForm
 
 
@@ -78,5 +78,5 @@ class MentorsUserAdmin(UserAdmin):
     ordering = ('email', 'full_name')
     filter_horizontal = ()
 
-# Now register the new UserAdmin...
 admin.site.register(MentorsUser, MentorsUserAdmin)
+admin.site.register(GPGKey)
