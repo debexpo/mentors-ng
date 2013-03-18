@@ -232,17 +232,31 @@ AUTH_USER_MODEL = 'profiles.MentorsUser'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)-8s %(name)-15s %(message)s',
+        },
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
-        }
+        },
+        'console_logging': {
+            '()': 'lib.log.ConsoleLoggingFilter',
+        },
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['console_logging'],
+            'class': 'logutils.colorize.ColorizingStreamHandler',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django.request': {
@@ -250,7 +264,12 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-    }
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }
 ########## END LOGGING CONFIGURATION
 
