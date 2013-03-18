@@ -34,6 +34,7 @@ from django.conf import settings
 
 from . import gnupg
 
+
 # Provide a well-configured instance of the GnuPG object
 def get_gnupg():
     gpg_dir = os.path.join(settings.MENTORS_ROOT, 'gpg')
