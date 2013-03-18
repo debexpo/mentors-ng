@@ -139,6 +139,8 @@ VL17u/UK61KFOBNVOO+Jmx/cYVo75Bv1LBfIk8I=
 -----END PGP PUBLIC KEY BLOCK-----
 """
 
+clement_gpg_key_fpr = 'E4BA6F4097B08D5AE8DC68C95E39E0E38123F27C'
+
 test_gpg_key = """\
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v2.0.9 (GNU/Linux)
@@ -273,6 +275,18 @@ class TestGnuPGController(TestCase):
         self.assertTrue(result.success)
         result = gnupg.add_key(data=test_gpg_key)
         self.assertTrue(result.success)
+
+    def test_list_keys(self):
+        gnupg = self._get_gnupg()
+        gnupg.add_key(data=clement_gpg_key)
+        gnupg.add_key(data=test_gpg_key)
+
+        keys = list(gnupg.list_keys())
+        self.assertEqual(len(keys), 2)
+
+        fingerprints = [key.key.fingerprint for key in keys]
+        self.assertIn(test_gpg_key_fpr, fingerprints)
+        self.assertIn(clement_gpg_key_fpr, fingerprints)
 
     def test_obsolete_signature_verification(self):
         """

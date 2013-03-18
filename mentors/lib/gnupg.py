@@ -54,7 +54,8 @@ from collections import namedtuple
 # Regular expressions for parsing gnupg's output
 #
 
-GPG_ADDR_PATTERN = r"^(pub\s+(?P<key_id>\S+)\s+(?P<key_date>\S+)\s|uid\s+)(?P<uid_name>.+)\s+<(?P<uid_email>.+?)>$"
+GPG_KEY_PATTERN = r"^pub\s+(?P<key_id>\S+)\s+(?P<key_date>\S+)"
+GPG_ADDR_PATTERN = r"^(?:pub\s+(?P<key_id>\S+)\s+(?P<key_date>\S+)|uid)(?:\s+(?P<uid_name>.+)\s+<(?P<uid_email>.+?)>)?$"
 GPG_FPR_PATTERN = r"^.* = (?P<fingerprint>(?:[0-9A-F]{4} ){5} (?:[0-9A-F]{4} ){4}[0-9A-F]{4})$"
 
 
@@ -245,29 +246,57 @@ class GnuPG(object):
         out = unicode(out, encoding='utf-8', errors='replace')
         lines = (out.split('\n'))
 
+        return self._parse_key_info(lines)
+
+    def _parse_key_info(self, lines):
         key = None
         fingerprint = None
         user_ids = []
         for line in lines:
-            m = re.match(GPG_ADDR_PATTERN, line)
+            m = re.match(GPG_KEY_PATTERN, line)
             if m is not None:
                 if key is None and m.group('key_id') is not None:
                     key = self.string_to_key(m.group('key_id'))
 
+            m = re.match(GPG_ADDR_PATTERN, line)
+            if m is not None:
                 if m.group('uid_name') is not None and m.group('uid_email') is not None:
                     uid_name = m.group('uid_name')
                     uid_email = m.group('uid_email')
                     user_id = GpgUserId(uid_name, uid_email)
                     user_ids.append(user_id)
-            else:
-                m = re.match(GPG_FPR_PATTERN, line)
-                if m is not None:
-                    fingerprint = m.group('fingerprint').replace(' ', '')
+
+            m = re.match(GPG_FPR_PATTERN, line)
+            if m is not None:
+                fingerprint = m.group('fingerprint').replace(' ', '')
 
         if key is not None:
             return GpgKeyBlock(key._replace(fingerprint=fingerprint), user_ids)
         else:
             return GpgKeyBlock(None, None)
+
+    def list_keys(self, pubring=None):
+        """
+        List all the keys from the keyring
+        """
+        args = ('--list-keys',)
+
+        (out, err, status, code) = self._run(args=args, pubring=pubring)
+
+        if code:
+            return
+
+        # Remove the first two useless lines
+        outlines = out.splitlines()[2:]
+        cur_block = []
+        for line in outlines:
+            if line:
+                cur_block.append(line)
+            else:
+                yield self._parse_key_info(cur_block)
+                cur_block = []
+        if cur_block:
+            yield self._parse_key_info(cur_block)
 
     def add_key(self, data=None, path=None, pubring=None):
         """
