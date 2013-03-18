@@ -36,7 +36,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
-from lib.utils import gpg
+from lib.utils import get_gnupg
 
 
 class MentorsUserManager(BaseUserManager):
@@ -94,9 +94,13 @@ class GPGKey(models.Model):
     algorithm = models.CharField(max_length=10)
     fingerprint = models.CharField(max_length=128, unique=True)
 
+    def __init__(self, *args, **kwargs):
+        super(GPGKey, self).__init__(*args, **kwargs)
+        self.gpg = get_gnupg()
+
     def as_key_block(self):
         if not hasattr(self, '__key_block'):
-            self.__key_block = gpg.parse_key_block(data=self.key)
+            self.__key_block = self.gpg.parse_key_block(data=self.key)
         return self.__key_block
 
     def clean(self):
@@ -116,11 +120,11 @@ class GPGKey(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
-        gpg.add_key(data=self.key)
+        self.gpg.add_key(data=self.key)
         return super(GPGKey, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        gpg.remove_key(self.fingerprint)
+        self.gpg.remove_key(self.fingerprint)
         return super(GPGKey, self).delete(*args, **kwargs)
 
     def __unicode__(self):

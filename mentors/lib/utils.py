@@ -34,12 +34,10 @@ from django.conf import settings
 
 from . import gnupg
 
-# Provide a singleton instance of the GnuPG object
-if not hasattr(gnupg, 'gnupg_instance'):
+# Provide a well-configured instance of the GnuPG object
+def get_gnupg():
     gpg_dir = os.path.join(settings.MENTORS_ROOT, 'gpg')
     if not os.path.exists(gpg_dir):
         os.makedirs(gpg_dir)
     pubring = os.path.join(gpg_dir, 'pubring.gpg')
-    gnupg.gnupg_instance = gnupg.GnuPG(default_keyring=pubring)
-
-gpg = gnupg.gnupg_instance
+    return gnupg.GnuPG(default_keyring=pubring)

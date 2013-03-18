@@ -35,7 +35,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from extra_views import InlineFormSet
 
-from lib.utils import gpg
+from lib.utils import get_gnupg
 from .models import MentorsUser, GPGKey
 
 
@@ -120,7 +120,7 @@ class UserModificationForm(forms.ModelForm):
 class GPGKeyInputWidget(forms.FileInput):
     def render(self, name, value, attrs=None):
         if value:
-            key = gpg.parse_key_block(value).key
+            key = get_gnupg().parse_key_block(value).key
             return mark_safe("<div>Existing key: %(key)s</div>" % {'key': "%s%s/%s" % (key.strength, key.type, key.fingerprint[-16:])})
         else:
             return super(GPGKeyInputWidget, self).render(name, None, attrs)
