@@ -29,6 +29,7 @@
 #
 
 from django import forms
+from django.contrib.auth import forms as auth_forms
 from django.utils.safestring import mark_safe
 
 from crispy_forms.helper import FormHelper
@@ -115,6 +116,27 @@ class UserModificationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class LoginForm(auth_forms.AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+
+class PasswordResetForm(auth_forms.PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+
+class SetPasswordForm(auth_forms.SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
 
 
 class GPGKeyInputWidget(forms.FileInput):

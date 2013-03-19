@@ -316,6 +316,18 @@ DATABASES = {
 ########## END DATABASE CONFIGURATION
 
 
+########## LOGIN CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+LOGIN_URL = 'login'
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logout-url
+LOGOUT_URL = 'logout'
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+LOGIN_REDIRECT_URL = '/'
+########## END LOGIN CONFIGURATION
+
+
 ########## WSGI CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'

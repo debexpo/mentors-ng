@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="span4 offset4 well">
+        {% if validlink %}
+        <h1>{% trans "Password reset" %}</h1>
+        {% crispy form %}
+        {% else %}
+        <h1>{% trans "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset." %}</h1>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

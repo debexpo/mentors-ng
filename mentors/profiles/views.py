@@ -28,7 +28,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 
-from django.contrib.auth import login
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import views as auth_views
 from django.views.generic import DetailView
 
 from braces.views import LoginRequiredMixin
@@ -68,7 +69,7 @@ class Activate(views.Activate):
         user.is_active = True
         user.save()
         user.backend = 'django.contrib.auth.backends.ModelBackend'
-        login(self.request, user)
+        auth_login(self.request, user)
 
 
 class ActivationComplete(views.ActivationComplete):
@@ -94,6 +95,36 @@ class ProfileEdit(LoginRequiredMixin, UpdateWithInlinesView):
 
     def get_form(self, form_class):
         return form_class(self.get_object(), **self.get_form_kwargs())
+
+
+def login(request):
+    return auth_views.login(request, authentication_form=forms.LoginForm, template_name="profiles/login.html")
+
+
+def logout(request):
+    return auth_views.logout(request, '/')
+
+
+def password_reset(request):
+    return auth_views.password_reset(
+        request,
+        template_name="profiles/password/reset.html",
+        email_template_name="profiles/password/reset_email.txt",
+        password_reset_form=forms.PasswordResetForm,
+        post_reset_redirect='/',
+    )
+
+
+def password_reset_confirm(request, uidb36=None, token=None):
+    from django.core.urlresolvers import reverse
+    return auth_views.password_reset_confirm(
+        request,
+        uidb36=uidb36,
+        token=token,
+        template_name="profiles/password/reset_confirm.html",
+        set_password_form=forms.SetPasswordForm,
+        post_reset_redirect=reverse('profile_edit'),
+    )
 
 
 register = Register.as_view()

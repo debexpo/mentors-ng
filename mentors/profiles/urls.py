@@ -44,4 +44,10 @@ urlpatterns = patterns(
 
     url(r'^view/(?P<email>[^/]+)/$', views.profile_view, name='profile_view'),
     url(r'^edit/$', views.profile_edit, name='profile_edit'),
+
+    url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
+
+    url(r'^password/forgotten/$', views.password_reset, name='password_reset'),
+    url(r'^password/reset/(?P<uidb36>[^/]+)/(?P<token>[^/]+)/$', views.password_reset_confirm, name='password_reset_confirm'),
 )
