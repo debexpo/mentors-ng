@@ -30,8 +30,7 @@
 
 from __future__ import unicode_literals
 
-from django.test import TestCase
-
+from lib.test import TestCase
 from profiles.forms import UserCreationForm
 
 
