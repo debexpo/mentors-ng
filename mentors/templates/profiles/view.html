@@ -6,7 +6,7 @@
     <div class="span3">
         <ul class="nav nav-list">
             <li><a href="#personalinfo">{% trans "Personal information" %}</a></li>
-            {% if user == request.user %}
+            {% if object == request.user %}
             <li><a href="{% url "profile_edit" %}">{% trans "Edit" %}</a></li>
             {% endif %}
         </ul>
@@ -18,17 +18,17 @@
         </div>
         <h3>{% trans "Identity" %}</h3>
         <dl>
-            {% if user.full_name %}
+            {% if object.full_name %}
             <dt>{% trans "Full name" %}</dt>
-            <dd>{{ user.full_name }}</dd>
+            <dd>{{ object.full_name }}</dd>
             {% endif %}
             <dt>{% trans "Email address" %}</dt>
-            <dd><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
+            <dd><a href="mailto:{{ object.email }}">{{ object.email }}</a></dd>
         </dl>
-        {% if user.gpg_keys.all %}
+        {% if object.gpg_keys.all %}
         <h3>{% trans "PGP Keys" %}</h3>
         <dl>
-            {% for key in user.gpg_keys.all %}
+            {% for key in object.gpg_keys.all %}
             <dt>{{ key.algorithm }}/{{ key.as_key_block.key.id }}</dt>
             <dd>
                 <dl>
