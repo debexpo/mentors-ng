@@ -35,12 +35,12 @@ from braces.views import LoginRequiredMixin
 from extra_views import UpdateWithInlinesView
 from le_social.registration import views
 
-from .forms import UserCreationForm, UserModificationForm, InlineGPGKeyFormSet
+from . import forms
 from .models import MentorsUser
 
 
 class Register(views.Register):
-    form_class = UserCreationForm
+    form_class = forms.UserCreationForm
     template_name = "profiles/registration/register.html"
     notification_subject_template_name = "profiles/registration/activation_email_subject.txt"
     notification_template_name = "profiles/registration/activation_email.txt"
@@ -86,8 +86,8 @@ class ProfileView(DetailView):
 class ProfileEdit(LoginRequiredMixin, UpdateWithInlinesView):
     template_name = "profiles/edit.html"
     model = MentorsUser
-    form_class = UserModificationForm
-    inlines = [InlineGPGKeyFormSet]
+    form_class = forms.UserModificationForm
+    inlines = [forms.InlineGPGKeyFormSet]
 
     def get_object(self):
         return self.request.user
