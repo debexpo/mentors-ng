@@ -37,6 +37,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 from lib.utils import get_gnupg
+from lib.gnupg import GpgInvalidKeyBlock
 
 
 class MentorsUserManager(BaseUserManager):
@@ -99,8 +100,12 @@ class GPGKey(models.Model):
         self.gpg = get_gnupg()
 
     def as_key_block(self):
+        from django.core.exceptions import ValidationError
         if not hasattr(self, '__key_block'):
-            self.__key_block = self.gpg.parse_key_block(data=self.key)
+            try:
+                self.__key_block = self.gpg.parse_key_block(data=self.key)
+            except GpgInvalidKeyBlock:
+                raise ValidationError(_('The given key data is invalid'))
         return self.__key_block
 
     def clean(self):

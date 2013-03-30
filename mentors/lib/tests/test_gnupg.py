@@ -44,7 +44,7 @@ import shutil
 import tempfile
 from unittest import TestCase
 
-from ..gnupg import GnuPG, GpgUserId, GpgFailure, GpgVerifyInvalidData, GpgVerifyNoData
+from ..gnupg import GnuPG, GpgUserId, GpgFailure, GpgVerifyInvalidData, GpgVerifyNoData, GpgInvalidKeyBlock
 
 clement_gpg_key = """\
 -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -266,8 +266,8 @@ class TestGnuPGController(TestCase):
         gnupg = self._get_gnupg()
         self.assertFalse(gnupg.is_unusable)
         invalid_block = self._get_data_file('invalid_key_block')
-        kb = gnupg.parse_key_block(path=invalid_block)
-        self.assertIsNone(kb.key)
+        with self.assertRaises(GpgInvalidKeyBlock):
+                    kb = gnupg.parse_key_block(path=invalid_block)
 
     def test_add_key(self):
         gnupg = self._get_gnupg()

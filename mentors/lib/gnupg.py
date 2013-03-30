@@ -119,6 +119,9 @@ class GpgFailure(GpgBaseException):
 class GpgMissingData(GpgBaseException):
     """ Some data is missing for the gpg command. """
 
+class GpgInvalidKeyBlock(GpgBaseException):
+    """ Data is not a valid key block """
+
 
 #
 # Main class
@@ -240,7 +243,7 @@ class GnuPG(object):
 
     def _parse_key_block_result(self, out, err, code):
         if code != 0:
-            return GpgKeyBlock(None, None)
+            raise GpgInvalidKeyBlock()
 
         # FIXME: use the system's encoding instead of utf-8
         out = unicode(out, encoding='utf-8', errors='replace')
