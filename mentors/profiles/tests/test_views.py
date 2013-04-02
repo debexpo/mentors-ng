@@ -134,6 +134,9 @@ class EditProfileTests(TestCase):
         self.nicolas_key_fingerprint = '791F12396630DD71FD364375B8E5087766475AAF'
         self.nicolas_key_algorithm = '4096R'
 
+        key = GPGKey(owner=self.user, key=open(self.nicolas_key_path).read())
+        key.save()
+
     def test_edit_logged_out(self):
         response = self.client.get(reverse("profile_edit"))
         self.assertRedirects(response, reverse("login") + '?next=%s' % reverse('profile_edit'))
