@@ -122,6 +122,9 @@ class GpgMissingData(GpgBaseException):
 class GpgInvalidKeyBlock(GpgBaseException):
     """ Data is not a valid key block """
 
+class GpgKeyBlockParsingError(GpgBaseException):
+    """ Error while parsing the key block """
+
 
 #
 # Main class
@@ -276,7 +279,7 @@ class GnuPG(object):
         if key is not None:
             return GpgKeyBlock(key._replace(fingerprint=fingerprint), user_ids)
         else:
-            return GpgKeyBlock(None, None)
+            raise GpgKeyBlockParsingError()
 
     def list_keys(self, pubring=None):
         """
