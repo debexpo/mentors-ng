@@ -49,6 +49,7 @@ class PackageUpload(models.Model):
     maintainer = models.TextField()
     section = models.TextField()
     suite = models.ForeignKey(Suite)
+    description = models.TextField()
     qa_status = models.IntegerField()
     component = models.TextField()
     priority = models.TextField()
@@ -59,6 +60,7 @@ class PackageUpload(models.Model):
 class BinaryPackage(models.Model):
     upload = models.ForeignKey(PackageUpload)
     arch = models.TextField()
+    description = models.TextField()
 
 
 class SourcePackage(models.Model):
@@ -70,7 +72,7 @@ class PackageFile(models.Model):
     source = models.ForeignKey(SourcePackage)
     filename = models.TextField()
     size = models.IntegerField()
-    md5sum = models.CharField(max_length=200)
+    checksum = models.CharField(max_length=200)
 
 
 class Suite(models.Model):
