@@ -48,7 +48,7 @@ class PackageUpload(models.Model):
     version = models.TextField()
     maintainer = models.TextField()
     section = models.TextField()
-    suite = models.TextField()
+    suite = models.ForeignKey(Suite)
     qa_status = models.IntegerField()
     component = models.TextField()
     priority = models.TextField()
@@ -71,3 +71,7 @@ class PackageFile(models.Model):
     filename = models.TextField()
     size = models.IntegerField()
     md5sum = models.CharField(max_length=200)
+
+
+class Suite(models.Model):
+    name = models.TextField()
