@@ -38,3 +38,11 @@ Supplementary functionality
  - Per-team review queues
  - "Social" authentication (OpenID, Debian SSO, ...)
 
+Package repository requirements
+-------------------------------
+
+
+< daemonkeeper> Actually, even several users allowing to upload the
+                same package in different branches
+< daemonkeeper> Or even worse, the same user uploading the same
+                package to different branches.
