@@ -38,7 +38,6 @@ from profiles.models import MentorsUser
 
 class Package(models.Model):
     name = models.TextField()
-    description = models.TextField()
 
 
 class PackageUpload(models.Model):
