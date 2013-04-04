@@ -33,11 +33,7 @@ from django.conf import settings
 
 class Package(models.Model):
     name = models.TextField()
-
-
-class PackageUpload(models.Model):
     uploader = models.ForeignKey(settings.AUTH_USER_MODEL)
-    package = models.ForeignKey(Package)
 
     version = models.TextField()
     maintainer = models.TextField()
@@ -52,13 +48,12 @@ class PackageUpload(models.Model):
 
 
 class BinaryPackage(models.Model):
-    upload = models.ForeignKey(PackageUpload)
+    package = models.ForeignKey(Package)
     arch = models.TextField()
     description = models.TextField()
 
 
 class SourcePackage(models.Model):
-    upload = models.ForeignKey(PackageUpload)
 
 
 class PackageFile(models.Model):
