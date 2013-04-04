@@ -29,19 +29,14 @@
 #
 
 from django.db import models
-
-from profiles.models import MentorsUser
-
-
-# Create your models here.
-
+from django.conf import settings
 
 class Package(models.Model):
     name = models.TextField()
 
 
 class PackageUpload(models.Model):
-    uploader = models.ForeignKey(MentorsUser)
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL)
     package = models.ForeignKey(Package)
 
     version = models.TextField()
