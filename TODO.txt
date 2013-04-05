@@ -46,3 +46,11 @@ Package repository requirements
                 same package in different branches
 < daemonkeeper> Or even worse, the same user uploading the same
                 package to different branches.
+
+
+
+Git repository:
+ - single repository for each source package
+ - one branch per (person, suite)
+ -> allow diffing a wheezy package with the sid one, or two persons' package, etc.
+		  
