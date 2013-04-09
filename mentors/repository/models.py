@@ -4,7 +4,7 @@
 #
 # This file is part of mentors.debian.net
 #
-# Copyright © 2013 Clément Schreiner
+# Copyright © 2013 Clément Schreiner <clement@mux.me>
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -30,6 +30,13 @@
 
 from django.db import models
 from django.conf import settings
+
+class Suite(models.Model):
+    name = models.TextField()
+
+    def __unicode__(self):
+        return self.name
+
 
 class Package(models.Model):
     name = models.TextField()
@@ -66,7 +73,7 @@ class BinaryPackage(models.Model):
 
 class SourcePackage(models.Model):
     name = models.TextField()
-    package = models.ForeignKey(PackageUpload)
+    package = models.ForeignKey(Package)
 
     def __unicode__(self):
         return self.name
@@ -83,9 +90,3 @@ class PackageFile(models.Model):
         return '{0} ({1})'.format(self.filename,
                                   self.binary if self.binary else self.source)
 
-
-class Suite(models.Model):
-    name = models.TextField()
-
-    def __unicode__(self):
-        return self.name

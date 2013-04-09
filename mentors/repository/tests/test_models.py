@@ -36,7 +36,7 @@ from django.conf import settings
 
 from lib.test import TestCase
 
-from repository.models import Package, PackageUpload, BinaryPackage, SourcePackage, PackageFile
+from repository.models import Suite, Package, BinaryPackage, SourcePackage, PackageFile
 
 class PackageTests(TestCase):
     #flake8: noqa
