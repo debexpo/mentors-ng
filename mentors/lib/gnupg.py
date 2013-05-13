@@ -248,7 +248,6 @@ class GnuPG(object):
         if code != 0:
             raise GpgInvalidKeyBlock()
 
-        # FIXME: use the system's encoding instead of utf-8
         out = unicode(out, encoding='utf-8', errors='replace')
         lines = (out.split('\n'))
 
