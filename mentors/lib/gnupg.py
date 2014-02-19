@@ -44,9 +44,10 @@ __copyright__ = ', '.join([
 ])
 __license__ = 'MIT'
 
+import locale
 import os
-import subprocess
 import re
+import subprocess
 from collections import namedtuple
 
 
@@ -248,7 +249,7 @@ class GnuPG(object):
         if code != 0:
             raise GpgInvalidKeyBlock()
 
-        out = unicode(out, encoding='utf-8', errors='replace')
+        out = unicode(out, encoding=locale.getdefaultlocale()[1], errors='replace')
         lines = (out.split('\n'))
 
         return self._parse_key_info(lines)
