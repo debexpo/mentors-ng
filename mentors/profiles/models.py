@@ -121,8 +121,7 @@ class GPGKey(models.Model):
             raise ValidationError(_('The given key does not belong to the user'))
 
         self.fingerprint = self.as_key_block().key.fingerprint
-        self.algorithm = "%s%s" % (self.as_key_block().key.strength,
-                                                   self.as_key_block().key.type)
+        self.algorithm = "%(strength)s%(type)s" % (self.as_key_block().key._asdict())
 
     def save(self, *args, **kwargs):
         self.clean()
