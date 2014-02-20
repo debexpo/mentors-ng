@@ -1,7 +1,7 @@
 # Local development dependencies go here
 -r base.txt
 coverage==3.6
-django-debug-toolbar==0.9.4
+django-debug-toolbar==1.0.1
 django-discover-runner==0.3
 flake8==2.0
 pep8-naming==0.2.1
