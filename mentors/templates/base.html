@@ -1,70 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "debian-base.html" %}
 
-    <!-- Le styles -->
-    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">
+{% block title %} mentors.debian.net {% endblock %}
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="{{ STATIC_URL }}js/html5shiv.min.js"></script>
-    <![endif]-->
+{% block head_meta %}
+<link rev="made" href="mailto:mentors@debian.net">
+<meta name="Language" content="English">
+<meta name="Author"   content="Nicolas Dandrimont, olasd@debian.org">
+{% endblock %}
 
-    <!-- This file store project specific CSS -->
-    <link href="{{ STATIC_URL }}css/mentors.css" rel="stylesheet">
+{% block head_resources %}
+  {{block.super}}
+  <link type="text/css" rel="stylesheet" media="all" href="{{ STATIC_URL }}css/mentors.css">
+{% endblock %}
 
-    <!-- Use this to quickly test CSS changes in a template, 
-        then move to project.css -->
-    {% block extra_css %}{% endblock extra_css %}
-  </head>
+{% block section %} mentors {% endblock %}
 
-  <body>
+{% block searchbox %}
+{% comment %}No search feature in Mentors site yet{% endcomment %}
+{% endblock %}
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Debian mentors</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+{% block navbar %}
+  <li><a href="#">Home</a></li>
+  <li><a href="#about">About</a></li>
+  <li><a href="#contact">Contact</a></li>
+{% endblock %}
 
-    <div class="container">
-        {% block content %}{% endblock content %}
-    </div> <!-- /container -->
+{% block relatedpages %}
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ STATIC_URL }}js/jquery-1.9.1.min.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery-migrate-1.1.1.min.js"></script>
-    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-    
-    <script src="{{ STATIC_URL }}js/mentors.js"></script>
+{% endblock %}
 
-    {% block extra_js %}{% endblock extra_js %}
-  </body>
-</html>
+{% block breadcrumbs %} mentors {% endblock %}
 
+
+{% block content %}
+<h1>Welcome to mentors.debian.net</h1>
+{% endblock content %}
+
+{% block footer %}
+<p>Copyright © 2013-2014 Nicolas Dandrimont &lt;olasd@debian.org&gt;, Clément Schreiner &lt;clement@mux.me&gt;. See <a href="#">license terms</a>.
+Source code is <a href="http://anonscm.debian.org/gitweb/?p=debexpo/mentors.git">here</a>, to help see
+<a href="https://wiki.debian.org/Debexpo">here</a>.
+Please report bugs against on <a href="https://alioth.debian.org/tracker/?atid=413115&group_id=100127&func=browse">alioth</a>.
+</p>
+{% endblock %}
