@@ -1,53 +1,50 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block relatedpages %}
+<a href="#personalinfo">{% trans "Personal information" %}</a>
+{% if object == request.user %}
+<a href="{% url "profile_edit" %}">{% trans "Edit" %}</a>
+{% endif %}
+{% endblock %}
+
+
 {% block content %}
-<div class="row">
-    <div class="span3">
-        <ul class="nav nav-list">
-            <li><a href="#personalinfo">{% trans "Personal information" %}</a></li>
-            {% if object == request.user %}
-            <li><a href="{% url "profile_edit" %}">{% trans "Edit" %}</a></li>
-            {% endif %}
-        </ul>
+
+  <section id="personalinfo">
+    <div class="page-header">
+      <h1>{% trans "Personal information" %}</h1>
     </div>
-    <div class="span9">
-        <section id="personalinfo">
-        <div class="page-header">
-            <h1>{% trans "Personal information" %}</h1>
-        </div>
-        <h3>{% trans "Identity" %}</h3>
+    <h3>{% trans "Identity" %}</h3>
+    <dl>
+      {% if object.full_name %}
+      <dt>{% trans "Full name" %}</dt>
+      <dd>{{ object.full_name }}</dd>
+      {% endif %}
+      <dt>{% trans "Email address" %}</dt>
+      <dd><a href="mailto:{{ object.email }}">{{ object.email }}</a></dd>
+    </dl>
+    {% if object.gpg_keys.all %}
+    <h3>{% trans "PGP Keys" %}</h3>
+    <dl>
+      {% for key in object.gpg_keys.all %}
+      <dt>{{ key.algorithm }}/{{ key.as_key_block.key.id }}</dt>
+      <dd>
         <dl>
-            {% if object.full_name %}
-            <dt>{% trans "Full name" %}</dt>
-            <dd>{{ object.full_name }}</dd>
-            {% endif %}
-            <dt>{% trans "Email address" %}</dt>
-            <dd><a href="mailto:{{ object.email }}">{{ object.email }}</a></dd>
+          <dt>{% trans "Fingerprint" %}</dt>
+          <dd>{{ key.fingerprint }}</dd>
+          <dt>{% trans "User IDs" %}</dt>
+          <dd>
+            <ul>
+              {% for userid, mail in key.as_key_block.user_ids %}
+              <li>{{ userid }} &lt;<a href="mailto:{{ mail }}">{{ mail }}</a>&gt;</li>
+              {% endfor %}
+            </ul>
+          </dd>
         </dl>
-        {% if object.gpg_keys.all %}
-        <h3>{% trans "PGP Keys" %}</h3>
-        <dl>
-            {% for key in object.gpg_keys.all %}
-            <dt>{{ key.algorithm }}/{{ key.as_key_block.key.id }}</dt>
-            <dd>
-                <dl>
-                    <dt>{% trans "Fingerprint" %}</dt>
-                    <dd>{{ key.fingerprint }}</dd>
-                    <dt>{% trans "User IDs" %}</dt>
-                    <dd>
-                        <ul>
-                            {% for userid, mail in key.as_key_block.user_ids %}
-                            <li>{{ userid }} &lt;<a href="mailto:{{ mail }}">{{ mail }}</a>&gt;</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                </dl>
-            </dd>
-            {% endfor %}
-        </dl>
-        {% endif %}
-        </section>
-    </div>
-</div>
+      </dd>
+      {% endfor %}
+    </dl>
+    {% endif %}
+  </section>
 {% endblock content %}

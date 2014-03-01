@@ -4,12 +4,8 @@
 {% load i18n %}
 
 {% block content %}
-<div class="row">
-    <div class="span4 offset4 well">
-        <h1>{% trans "Login" %}</h1>
-        {% crispy form %}
-        <p><a href="{% url "password_reset" %}">{% trans "Forgotten password?" %}</a></p>
-    </div>
-</div>
+<h1>{% trans "Login" %}</h1>
+{% crispy form %}
+<p><a href="{% url "password_reset" %}">{% trans "Forgotten password?" %}</a></p>
 {% endblock content %}
 
